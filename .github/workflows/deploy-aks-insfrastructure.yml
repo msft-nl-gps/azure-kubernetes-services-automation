@@ -47,7 +47,7 @@ jobs:
     with:
       logAnalyticsWorkspaceResourceId: ${{ needs.provision-monitoring.outputs.logAnalyticsWorkspaceResourceId }}
       vnetResourceId: ${{ needs.provision-networking.outputs.vnet-id }}
-      subnetResourceId: ${{ needs.provision-networking.outputs.subnet-id-aag }}
+      subnetResourceId: ${{ needs.provision-networking.outputs.subnet-id-aks }}
       aksIdentityResourceId: ${{ needs.provision-identity.outputs.aksIdentityResourceId }}
       containerRegistryResourceId: ${{ needs.provision-container-registry.outputs.acrResourceId }}
       aagResourceId: ${{ needs.provision-app-delivery.outputs.aagResourceId }}
