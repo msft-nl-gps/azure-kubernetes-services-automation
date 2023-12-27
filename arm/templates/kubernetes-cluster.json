@@ -28,6 +28,9 @@
         },
         "logAnalyticsWorkspaceResourceId": {
             "type": "string"
+        },
+        "publicIPAddressResourceId": {
+            "type": "string"
         }
     },
     "functions": [],
@@ -102,6 +105,7 @@
                 "kubernetesVersion": "[parameters('kubernetesVersion')]",
                 "autoUpgradeProfile": "[parameters('autoUpgradeProfile')]",
                 "enableRBAC": true,
+                "supportPlan": "KubernetesOfficial",
                 "aadProfile": {
                     "adminGroupObjectIDs": "[parameters('adminGroupObjectIDs')]",
                     "enableAzureRBAC": true,
@@ -119,6 +123,32 @@
                             "logAnalyticsWorkspaceResourceID": "[parameters('logAnalyticsWorkspaceResourceId')]"
                         }
                     }
+                },
+                "networkProfile": {
+                    "networkPlugin": "azure",
+                    "networkPolicy": "azure",
+                    "networkDataplane": "azure",
+                    "loadBalancerSku": "Standard",
+                    "loadBalancerProfile": {
+                        "managedOutboundIPs": {
+                            "count": 1
+                        },
+                        "effectiveOutboundIPs": [
+                            {
+                                "id": "[parameters('publicIPAddressResourceId')]"
+                            }
+                        ],
+                        "backendPoolType": "nodeIPConfiguration"
+                    },
+                    "serviceCidr": "11.0.0.0/16",
+                    "dnsServiceIP": "11.0.0.10",
+                    "outboundType": "loadBalancer",
+                    "serviceCidrs": [
+                        "11.0.0.0/16"
+                    ],
+                    "ipFamilies": [
+                        "IPv4"
+                    ]
                 }
             }
         }

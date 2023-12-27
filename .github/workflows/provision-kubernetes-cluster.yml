@@ -72,6 +72,16 @@ jobs:
           parameters: >
             arm/parameters/resource-group.aks-iaas.json
             resourceGroupLocation=${{ vars.AZURE_REGION }}
+      
+      - uses: azure/arm-deploy@v1
+        name: Public IP
+        id: publicIP
+        with:
+          template: arm/templates/public-ip.json
+          parameters: >
+            arm/parameters/public-ip.aks.json
+          resourceGroupName: ${{ steps.resourceGroupAKSPaaS.outputs.resourceGroupName }}
+          deploymentName: public-ip-aks
 
       - uses: azure/arm-deploy@v1
         name: Kubernetes Cluster
@@ -80,10 +90,10 @@ jobs:
           template: arm/templates/kubernetes-cluster.json
           parameters: >
             arm/parameters/kubernetes-cluster.json
-            virtualNetworkId=${{ inputs.vnetResourceId }}
-            subnetID=${{ inputs.subnetResourceId }}
-            resourgeGroupAKSIaaS=${{ steps.resourceGroupAKSIaaS.outputs.resourceGroupName }}
+            subnetResourceId=${{ inputs.subnetResourceId }}
             clusterIdentity=${{ inputs.aksIdentityResourceId }}
+            logAnalyticsWorkspaceResourceId=${{ inputs.logAnalyticsWorkspaceResourceId }}
+            publicIPAddressResourceId=${{ steps.publicIP.outputs.resourceId }}
           resourceGroupName: ${{ steps.resourceGroupAKSPaaS.outputs.resourceGroupName }}
-          deploymentName: container-registry
+          deploymentName: kubernetes-cluster
       

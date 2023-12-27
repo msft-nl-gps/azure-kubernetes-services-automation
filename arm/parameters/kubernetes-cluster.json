@@ -5,9 +5,6 @@
         "clusterName": {
             "value": "aks-p-uks-cluster"
         },
-        "clusterIdentity": {
-            "value": "/subscriptions/5100271a-e3c3-4311-a839-c6d8f9b40daa/resourcegroups/rg-p-uks-identity/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uai-p-uks-aks"
-        },
         "clusterSku": {
             "value": {
                 "name": "Base",
@@ -30,12 +27,6 @@
         },
         "nodeResourceGroup": {
             "value": "rg-p-uks-aks-iaas"
-        },
-        "subnetResourceId": {
-            "value": "/subscriptions/5100271a-e3c3-4311-a839-c6d8f9b40daa/resourceGroups/rg-p-uks-networking/providers/Microsoft.Network/virtualNetworks/vnet-p-uks/subnets/snet-p-aks"
-        },
-        "logAnalyticsWorkspaceResourceId":{
-            "value": "/subscriptions/5100271a-e3c3-4311-a839-c6d8f9b40daa/resourceGroups/rg-p-uks-monitoring/providers/Microsoft.OperationalInsights/workspaces/law-p-uks-aks-monitoring"
         }
     }
 }
