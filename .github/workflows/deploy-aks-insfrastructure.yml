@@ -29,6 +29,7 @@ jobs:
       vnetResourceId: ${{ needs.provision-networking.outputs.vnet-id }}
       subnetResourceId: ${{ needs.provision-networking.outputs.subnet-id-aag }}
       aagIdentityResourceId: ${{ needs.provision-identity.outputs.aagIdentityResourceId }}
+      aksIdentityResourceId: ${{ needs.provision-identity.outputs.aksIdentityResourceId }}
   
   provision-container-registry:
     uses: ./.github/workflows/provision-container-registry.yml
