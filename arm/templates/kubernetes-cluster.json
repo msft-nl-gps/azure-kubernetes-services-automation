@@ -159,6 +159,7 @@
                     }
                 }
             }
+        }
     ],
     "outputs": {
         "aks-cluster-id": {
