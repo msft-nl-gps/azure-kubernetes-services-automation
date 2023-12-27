@@ -31,63 +31,13 @@
         },
         "publicIPAddressResourceId": {
             "type": "string"
+        },
+        "systemPoolVMSize": {
+            "type": "string"
         }
     },
     "functions": [],
-    "variables": {
-        "agentPoolProfiles": [
-            {
-                "name": "agentpool",
-                "osDiskSizeGB": 128,
-                "count": 2,
-                "enableAutoScaling": true,
-                "minCount": 2,
-                "maxCount": 5,
-                "vmSize": "Standard_D8ds_v5",
-                "osType": "Linux",
-                "osSKU": "Ubuntu",
-                "storageProfile": "ManagedDisks",
-                "type": "VirtualMachineScaleSets",
-                "mode": "System",
-                "maxPods": 110,
-                "availabilityZones": [
-                    "1",
-                    "2",
-                    "3"
-                ],
-                "nodeTaints": [
-                    "CriticalAddonsOnly=true:NoSchedule"
-                ],
-                "enableNodePublicIP": false,
-                "tags": {},
-                "vnetSubnetID": "[parameters('subnetResourceId')]"
-            },
-            {
-                "name": "userpool",
-                "osDiskSizeGB": 128,
-                "count": 2,
-                "enableAutoScaling": true,
-                "minCount": 2,
-                "maxCount": 100,
-                "vmSize": "Standard_D8ds_v5",
-                "osType": "Linux",
-                "osSKU": "Ubuntu",
-                "storageProfile": "ManagedDisks",
-                "type": "VirtualMachineScaleSets",
-                "mode": "User",
-                "maxPods": 110,
-                "availabilityZones": [
-                    "1",
-                    "2",
-                    "3"
-                ],
-                "nodeTaints": [],
-                "enableNodePublicIP": false,
-                "tags": {},
-                "vnetSubnetID": "[parameters('subnetResourceId')]"
-            }
-        ]
-    },
+    "variables": {},
     "resources": [
         {
             "type": "Microsoft.ContainerService/managedClusters",
@@ -115,7 +65,35 @@
                 "disableLocalAccounts": true,
                 "dnsPrefix": "[parameters('clusterName')]",
                 "nodeResourceGroup": "[parameters('nodeResourceGroup')]",
-                "agentPoolProfiles": "[variables('agentPoolProfiles')]",
+                "agentPoolProfiles": [
+                    {
+                        "name": "systempool",
+                        "osDiskSizeGB": 128,
+                        "count": 2,
+                        "enableAutoScaling": true,
+                        "minCount": 2,
+                        "maxCount": 5,
+                        "vmSize": "[parameters('systemPoolVMSize')]",
+                        "osType": "Linux",
+                        "osSKU": "Ubuntu",
+                        "storageProfile": "ManagedDisks",
+                        "type": "VirtualMachineScaleSets",
+                        "mode": "System",
+                        "maxPods": 110,
+                        "availabilityZones": [
+                            "1",
+                            "2",
+                            "3"
+                        ],
+                        "nodeTaints": [
+                            "CriticalAddonsOnly=true:NoSchedule"
+                        ],
+                        "enableNodePublicIP": false,
+                        "tags": {},
+                        "vnetSubnetID": "[parameters('subnetResourceId')]"
+                    }
+
+                ],
                 "addonProfiles": {
                     "omsAgent": {
                         "enabled": true,

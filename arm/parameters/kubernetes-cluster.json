@@ -27,6 +27,9 @@
         },
         "nodeResourceGroup": {
             "value": "rg-p-uks-aks-iaas"
+        },
+        "systemPoolVMSize": {
+            "value": "Standard_D8ds_v5"
         }
     }
 }
