@@ -80,7 +80,8 @@ jobs:
             subnetResourceId=${{ inputs.subnetResourceId }}
             clusterIdentity=${{ inputs.aksIdentityResourceId }}
             logAnalyticsWorkspaceResourceId=${{ inputs.logAnalyticsWorkspaceResourceId }}
-            publicIPAddressResourceId=${{ steps.publicIP.outputs.resourceId }}
+            publicIPAddressResourceId=${{ steps.publicIP.outputs.public-ip-id }},
+            ingressApplicationGatewayResourceId=${{ inputs.aagResourceId }}
           resourceGroupName: ${{ steps.resourceGroupAKSPaaS.outputs.resourceGroupName }}
           deploymentName: kubernetes-cluster
       

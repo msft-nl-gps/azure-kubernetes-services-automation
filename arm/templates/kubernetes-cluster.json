@@ -34,6 +34,9 @@
         },
         "systemPoolVMSize": {
             "type": "string"
+        },
+        "ingressApplicationGatewayResourceId": {
+            "type": "string"
         }
     },
     "functions": [],
@@ -100,6 +103,25 @@
                         "config": {
                             "logAnalyticsWorkspaceResourceID": "[parameters('logAnalyticsWorkspaceResourceId')]"
                         }
+                    },
+                    "azureKeyvaultSecretsProvider": {
+                        "enabled": true,
+                        "config": {
+                            "enableSecretRotation": "false",
+                            "rotationPollInterval": "2m"
+                        }
+                    },
+                    "azurepolicy": {
+                        "enabled": true
+                    },
+                    "httpApplicationRouting": {
+                        "enabled": false
+                    },
+                    "ingressApplicationGateway": {
+                        "enabled": true,
+                        "config": {
+                            "applicationGatewayId": "[parameters('ingressApplicationGatewayResourceId')]"
+                        }
                     }
                 },
                 "networkProfile": {
@@ -131,5 +153,14 @@
             }
         }
     ],
-    "outputs": {}
+    "outputs": {
+        "aks-cluster-id": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.ContainerService/managedClusters', parameters('clusterName'))]"
+        },
+        "aks-cluster-api-server-address": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.ContainerService/managedClusters', parameters('clusterName'))).fqdn]"
+        }
+    }
 }
