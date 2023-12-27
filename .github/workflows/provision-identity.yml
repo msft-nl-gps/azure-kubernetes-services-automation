@@ -9,6 +9,9 @@ on:
         aksIdentityResourceId:
           description: The resource id of the user assigned managed identity for the AKS cluster
           value: ${{ jobs.aks-infra-identity.outputs.aksIdentityResourceId }}
+        aksAgicIdentityResourceId:
+          description: The resource id of the user assigned managed identity for the AKS AGIC
+          value: ${{ jobs.aks-infra-identity.outputs.aksAgicIdentityResourceId }}
 
 jobs:
     aks-infra-identity:
@@ -61,6 +64,17 @@ jobs:
                 arm/parameters/managed-identity.aks.json
               resourceGroupName: ${{ steps.resourceGroupIdentity.outputs.resourceGroupName }}
               deploymentName: managed-identity-aks
+          
+          - uses: azure/arm-deploy@v1
+            name: Managed Identity for AKS
+            id: uami-aks-agic
+            with:
+              template: arm/templates/managed-identity.json
+              parameters: >
+                arm/parameters/managed-identity.aks-agic.json
+              resourceGroupName: ${{ steps.resourceGroupIdentity.outputs.resourceGroupName }}
+              deploymentName: managed-identity-aks-agic
         outputs:
           aagIdentityResourceId: ${{ steps.uami-aag.outputs.userAssignedIdentityResourceId }}
           aksIdentityResourceId: ${{ steps.uami-aks.outputs.userAssignedIdentityResourceId }}
+          aksAgicIdentityResourceId: ${{ steps.uami-aks-agic.outputs.userAssignedIdentityResourceId }}

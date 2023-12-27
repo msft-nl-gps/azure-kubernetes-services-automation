@@ -22,7 +22,11 @@ on:
         aksIdentityResourceId:
           description: 'AKS Identity Resource Id'
           required: true
-          type: string  
+          type: string
+        aksAgicIdentityResourceId:
+          description: 'AKS AGIC Identity Resource Id'
+          required: true
+          type: string
       outputs:
         aagResourceId:
           description: 'Application Gateway Resource Id'
@@ -87,16 +91,16 @@ jobs:
           deploymentName: application-gateway-delivery
 
       - uses: azure/arm-deploy@v1
-        name: Allow the AKS to configure the AAG
-        id: aks-rbac-aag
+        name: Allow the AKS AGIC to configure the AAG
+        id: aks-agic-rbac-aag
         with:
           template: arm/templates/role-assignment.json
           parameters: >
             arm/parameters/role-assignment.aks-on-aag.json
             targetResourceId=${{ steps.applicationGateway.outputs.aagResourceId }}
-            uamiResourceId=${{ inputs.aksIdentityResourceId }}
+            uamiResourceId=${{ inputs.aksAgicIdentityResourceId }}
           resourceGroupName: ${{ steps.resourceGroupDelivery.outputs.resourceGroupName }}
-          deploymentName: aks-rbac-aag
+          deploymentName: aks-agic-rbac-aag
     outputs:
       delivery-resource-group-name: ${{ steps.resourceGroupDelivery.outputs.resourceGroupName }}
       aag-resource-id: ${{ steps.applicationGateway.outputs.aagResourceId }}

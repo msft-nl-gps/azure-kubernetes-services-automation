@@ -37,6 +37,9 @@
         },
         "ingressApplicationGatewayResourceId": {
             "type": "string"
+        },
+        "ingressApplicationGatewayUserDefinedManagedIdentityId": {
+            "type": "string"
         }
     },
     "functions": [],
@@ -121,37 +124,41 @@
                         "enabled": true,
                         "config": {
                             "applicationGatewayId": "[parameters('ingressApplicationGatewayResourceId')]"
-                        }
-                    }
-                },
-                "networkProfile": {
-                    "networkPlugin": "azure",
-                    "networkPolicy": "azure",
-                    "networkDataplane": "azure",
-                    "loadBalancerSku": "Standard",
-                    "loadBalancerProfile": {
-                        "managedOutboundIPs": {
-                            "count": 1
                         },
-                        "effectiveOutboundIPs": [
-                            {
-                                "id": "[parameters('publicIPAddressResourceId')]"
-                            }
-                        ],
-                        "backendPoolType": "nodeIPConfiguration"
+                        "identity": {
+                            "clientId": "[reference(parameters('ingressApplicationGatewayUserDefinedManagedIdentityId')).clientId]",
+                            "objectId": "[reference(parameters('ingressApplicationGatewayUserDefinedManagedIdentityId')).principalId]",
+                            "resourceId": "[parameters('ingressApplicationGatewayUserDefinedManagedIdentityId')]"
+                        }
                     },
-                    "serviceCidr": "11.0.0.0/16",
-                    "dnsServiceIP": "11.0.0.10",
-                    "outboundType": "loadBalancer",
-                    "serviceCidrs": [
-                        "11.0.0.0/16"
-                    ],
-                    "ipFamilies": [
-                        "IPv4"
-                    ]
+                    "networkProfile": {
+                        "networkPlugin": "azure",
+                        "networkPolicy": "azure",
+                        "networkDataplane": "azure",
+                        "loadBalancerSku": "Standard",
+                        "loadBalancerProfile": {
+                            "managedOutboundIPs": {
+                                "count": 1
+                            },
+                            "effectiveOutboundIPs": [
+                                {
+                                    "id": "[parameters('publicIPAddressResourceId')]"
+                                }
+                            ],
+                            "backendPoolType": "nodeIPConfiguration"
+                        },
+                        "serviceCidr": "11.0.0.0/16",
+                        "dnsServiceIP": "11.0.0.10",
+                        "outboundType": "loadBalancer",
+                        "serviceCidrs": [
+                            "11.0.0.0/16"
+                        ],
+                        "ipFamilies": [
+                            "IPv4"
+                        ]
+                    }
                 }
             }
-        }
     ],
     "outputs": {
         "aks-cluster-id": {
