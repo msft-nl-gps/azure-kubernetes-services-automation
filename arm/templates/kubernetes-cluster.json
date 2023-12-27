@@ -126,8 +126,8 @@
                             "applicationGatewayId": "[parameters('ingressApplicationGatewayResourceId')]"
                         },
                         "identity": {
-                            "clientId": "[reference(parameters('ingressApplicationGatewayUserDefinedManagedIdentityId')).clientId]",
-                            "objectId": "[reference(parameters('ingressApplicationGatewayUserDefinedManagedIdentityId')).principalId]",
+                            "clientId": "[reference(parameters('ingressApplicationGatewayUserDefinedManagedIdentityId'), '2023-01-31').clientId]",
+                            "objectId": "[reference(parameters('ingressApplicationGatewayUserDefinedManagedIdentityId'), '2023-01-31').principalId]",
                             "resourceId": "[parameters('ingressApplicationGatewayUserDefinedManagedIdentityId')]"
                         }
                     },
