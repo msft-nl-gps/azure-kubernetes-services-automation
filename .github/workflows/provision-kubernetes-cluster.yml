@@ -61,20 +61,7 @@ jobs:
             resourceGroupLocation=${{ vars.AZURE_REGION }}
       
       - uses: azure/arm-deploy@v1
-        name: RG AKS IaaS
-        id: resourceGroupAKSIaaS
-        with:
-          scope: subscription
-          region: ${{ vars.AZURE_REGION }}
-          subscriptionId: ${{ vars.SUBSCRIPTION_ID }}
-          deploymentName: rg-aks-iaas
-          template: arm/templates/resource-group.json
-          parameters: >
-            arm/parameters/resource-group.aks-iaas.json
-            resourceGroupLocation=${{ vars.AZURE_REGION }}
-      
-      - uses: azure/arm-deploy@v1
-        name: Public IP
+        name: Public IP AKS
         id: publicIP
         with:
           template: arm/templates/public-ip.json
