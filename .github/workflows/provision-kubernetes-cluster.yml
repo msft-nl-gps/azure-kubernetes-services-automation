@@ -61,6 +61,18 @@ jobs:
             resourceGroupLocation=${{ vars.AZURE_REGION }}
       
       - uses: azure/arm-deploy@v1
+        name: Allow the AKS to configure the AAG
+        id: aks-rbac-aag
+        with:
+          template: arm/templates/role-assignment.json
+          parameters: >
+            arm/parameters/role-assignment.aks-on-aag.json
+            targetResourceId=${{ inputs.aagResourceId }}
+            uamiResourceId=${{ inputs.aksIdentityResourceId }}
+          resourceGroupName: ${{ steps.resourceGroupAKSPaaS.outputs.resourceGroupName }}
+          deploymentName: aks-rbac-aag
+      
+      - uses: azure/arm-deploy@v1
         name: Public IP AKS
         id: publicIP
         with:
