@@ -96,7 +96,7 @@ jobs:
         with:
           template: arm/templates/role-assignment.json
           parameters: >
-            arm/parameters/role-assignment.aks-on-aag.json
+            arm/parameters/role-assignment.aks-agic-on-aag.json
             targetResourceId=${{ steps.applicationGateway.outputs.aagResourceId }}
             uamiResourceId=${{ inputs.aksAgicIdentityResourceId }}
           resourceGroupName: ${{ steps.resourceGroupDelivery.outputs.resourceGroupName }}
