@@ -24,6 +24,10 @@
         "resourceGroupName": {
             "type": "string",
             "value": "[parameters('resourceGroupName')]"
+        },
+        "resourceGroupId": {
+            "type": "string",
+            "value": "[reference('Microsoft.Resources/resourceGroups', parameters('resourceGroupName'), '2021-04-01').id]"
         }
     }
 }

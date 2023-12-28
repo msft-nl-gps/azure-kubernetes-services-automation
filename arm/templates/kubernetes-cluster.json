@@ -146,6 +146,10 @@
         "aks-cluster-api-server-address": {
             "type": "string",
             "value": "[reference(resourceId('Microsoft.ContainerService/managedClusters', parameters('clusterName'))).fqdn]"
+        },
+        "aks-cluster-agic-client-id": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.ContainerService/managedClusters', parameters('clusterName'))).addonProfiles.ingressApplicationGateway.identity.clientId]"
         }
     }
 }

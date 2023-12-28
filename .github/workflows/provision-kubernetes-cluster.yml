@@ -23,6 +23,10 @@ on:
           description: 'Container Registry Resource Id'
           required: true
           type: string
+        aagResourceGroupId:
+          description: 'Application Gateway Resource Group Id'
+          required: true
+          type: string
         aagResourceId:
           description: 'Application Gateway Resource Id'
           required: true
@@ -73,4 +77,8 @@ jobs:
             ingressApplicationGatewayResourceId=${{ inputs.aagResourceId }}
           resourceGroupName: ${{ steps.resourceGroupAKSPaaS.outputs.resourceGroupName }}
           deploymentName: kubernetes-cluster
+      
+      - run: |
+          az role assignment create --role Reader --scope ${{ inputs.aagResourceGroupId }} --assignee ${{ steps.kubernetes-cluster.outputs.aks-cluster-agic-client-id }}
+          az role assignment create --role Contributor --scope ${{ inputs.aagResourceId}} --assignee ${{ steps.kubernetes-cluster.outputs.aks-cluster-agic-client-id }}
       

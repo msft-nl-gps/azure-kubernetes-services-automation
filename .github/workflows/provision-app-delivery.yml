@@ -28,6 +28,9 @@ on:
           required: true
           type: string
       outputs:
+        aagResourceGroupId:
+          description: 'Application Gateway Resource Group Id'
+          value: ${{ jobs.provision-aag.outputs.delivery-resource-group-id }}
         aagResourceId:
           description: 'Application Gateway Resource Id'
           value: ${{ jobs.provision-aag.outputs.aag-resource-id }}
@@ -103,6 +106,7 @@ jobs:
           deploymentName: aks-agic-rbac-aag
     outputs:
       delivery-resource-group-name: ${{ steps.resourceGroupDelivery.outputs.resourceGroupName }}
+      delivery-resource-group-id: ${{ steps.resourceGroupDelivery.outputs.resourceGroupId }}
       aag-resource-id: ${{ steps.applicationGateway.outputs.aagResourceId }}
   
   provision-akv:
