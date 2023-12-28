@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "aksClusterId": {
+            "type": "string"            
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.ContainerService/managedClusters/agentPoolProfiles",
+            "apiVersion": "2023-07-01",
+            "name": "[concat(parameters('aksClusterId'), '/agentpool1')]",
+            "location": "[resourceGroup().location]"
+
+        }
+    ],
+    "outputs": {}
+}

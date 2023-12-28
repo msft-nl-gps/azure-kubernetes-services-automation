@@ -82,3 +82,25 @@ jobs:
           az role assignment create --role Reader --scope ${{ inputs.resourceGroupAsRBACScope }} --assignee ${{ steps.kubernetes-cluster.outputs.aks-cluster-agic-client-id }}
           az role assignment create --role Contributor --scope ${{ inputs.aagResourceId}} --assignee ${{ steps.kubernetes-cluster.outputs.aks-cluster-agic-client-id }}
       
+      - uses: azure/arm-deploy@v1
+        name: Kubernetes Cluster Agent Pool 01
+        id: kubernetes-cluster-agent-pool-01
+        with:
+          template: arm/templates/kubernetes-cluster.agent-pool.json
+          parameters: >
+            arm/parameters/kubernetes-cluster.agent-pool.01.json
+            aksClusterId=${{ steps.kubernetes-cluster.outputs.aks-cluster-id }}
+          resourceGroupName: ${{ steps.resourceGroupAKSPaaS.outputs.resourceGroupName }}
+          deploymentName: kubernetes-cluster-agent-pool-01
+      
+      - uses: azure/arm-deploy@v1
+        name: Kubernetes Cluster Agent Pool 02
+        id: kubernetes-cluster-agent-pool-02
+        with:
+          template: arm/templates/kubernetes-cluster.agent-pool.json
+          parameters: >
+            arm/parameters/kubernetes-cluster.agent-pool.02.json
+            aksClusterId=${{ steps.kubernetes-cluster.outputs.aks-cluster-id }}
+          resourceGroupName: ${{ steps.resourceGroupAKSPaaS.outputs.resourceGroupName }}
+          deploymentName: kubernetes-cluster-agent-pool-02
+      
