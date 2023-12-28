@@ -29,16 +29,10 @@
         "logAnalyticsWorkspaceResourceId": {
             "type": "string"
         },
-        "publicIPAddressResourceId": {
-            "type": "string"
-        },
         "systemPoolVMSize": {
             "type": "string"
         },
         "ingressApplicationGatewayResourceId": {
-            "type": "string"
-        },
-        "ingressApplicationGatewayUserDefinedManagedIdentityId": {
             "type": "string"
         }
     },
@@ -47,7 +41,7 @@
     "resources": [
         {
             "type": "Microsoft.ContainerService/managedClusters",
-            "apiVersion": "2023-02-01",
+            "apiVersion": "2023-07-01",
             "name": "[parameters('clusterName')]",
             "location": "[resourceGroup().location]",
             "identity": {
@@ -100,6 +94,17 @@
                     }
 
                 ],
+                "networkProfile": {
+                    "networkPlugin": "azure",
+                    "networkPolicy": "azure",
+                    "podCidr": "192.168.0.0/16",
+                    "serviceCidr": "172.16.0.0/16",
+                    "dnsServiceIP": "172.16.0.10",
+                    "dockerBridgeCidr": "172.17.0.1/16",
+                    "loadBalancerSku": "Standard",
+                    "loadBalancerProfile": "[json('null')]",
+                    "outboundType": "loadBalancer"
+                },
                 "addonProfiles": {
                     "omsAgent": {
                         "enabled": true,
@@ -115,7 +120,10 @@
                         }
                     },
                     "azurepolicy": {
-                        "enabled": true
+                        "enabled": true,
+                        "config": {
+                            "version": "v2"
+                        }
                     },
                     "httpApplicationRouting": {
                         "enabled": false
@@ -124,38 +132,7 @@
                         "enabled": true,
                         "config": {
                             "applicationGatewayId": "[parameters('ingressApplicationGatewayResourceId')]"
-                        },
-                        "identity": {
-                            "clientId": "[reference(parameters('ingressApplicationGatewayUserDefinedManagedIdentityId'), '2023-01-31').clientId]",
-                            "objectId": "[reference(parameters('ingressApplicationGatewayUserDefinedManagedIdentityId'), '2023-01-31').principalId]",
-                            "resourceId": "[parameters('ingressApplicationGatewayUserDefinedManagedIdentityId')]"
                         }
-                    },
-                    "networkProfile": {
-                        "networkPlugin": "azure",
-                        "networkPolicy": "azure",
-                        "networkDataplane": "azure",
-                        "loadBalancerSku": "Standard",
-                        "loadBalancerProfile": {
-                            "managedOutboundIPs": {
-                                "count": 1
-                            },
-                            "effectiveOutboundIPs": [
-                                {
-                                    "id": "[parameters('publicIPAddressResourceId')]"
-                                }
-                            ],
-                            "backendPoolType": "nodeIPConfiguration"
-                        },
-                        "serviceCidr": "11.0.0.0/16",
-                        "dnsServiceIP": "11.0.0.10",
-                        "outboundType": "loadBalancer",
-                        "serviceCidrs": [
-                            "11.0.0.0/16"
-                        ],
-                        "ipFamilies": [
-                            "IPv4"
-                        ]
                     }
                 }
             }

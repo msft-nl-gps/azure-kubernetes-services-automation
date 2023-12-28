@@ -27,10 +27,6 @@ on:
           description: 'Application Gateway Resource Id'
           required: true
           type: string
-        aksAgicIdentityResourceId:
-          description: 'AKS AGIC Identity Resource Id'
-          required: true
-          type: string
 
 jobs:
   provision-aks:
@@ -63,16 +59,6 @@ jobs:
           parameters: >
             arm/parameters/resource-group.aks-paas.json
             resourceGroupLocation=${{ vars.AZURE_REGION }}
-      
-      - uses: azure/arm-deploy@v1
-        name: Public IP AKS
-        id: publicIP
-        with:
-          template: arm/templates/public-ip.json
-          parameters: >
-            arm/parameters/public-ip.aks.json
-          resourceGroupName: ${{ steps.resourceGroupAKSPaaS.outputs.resourceGroupName }}
-          deploymentName: public-ip-aks
 
       - uses: azure/arm-deploy@v1
         name: Kubernetes Cluster
@@ -84,9 +70,7 @@ jobs:
             subnetResourceId=${{ inputs.subnetResourceId }}
             clusterIdentity=${{ inputs.aksIdentityResourceId }}
             logAnalyticsWorkspaceResourceId=${{ inputs.logAnalyticsWorkspaceResourceId }}
-            publicIPAddressResourceId=${{ steps.publicIP.outputs.public-ip-id }},
             ingressApplicationGatewayResourceId=${{ inputs.aagResourceId }}
-            ingressApplicationGatewayUserDefinedManagedIdentityId=${{ inputs.aksAgicIdentityResourceId }}
           resourceGroupName: ${{ steps.resourceGroupAKSPaaS.outputs.resourceGroupName }}
           deploymentName: kubernetes-cluster
       

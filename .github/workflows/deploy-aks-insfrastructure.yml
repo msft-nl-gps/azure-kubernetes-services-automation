@@ -53,4 +53,3 @@ jobs:
       aksIdentityResourceId: ${{ needs.provision-identity.outputs.aksIdentityResourceId }}
       containerRegistryResourceId: ${{ needs.provision-container-registry.outputs.acrResourceId }}
       aagResourceId: ${{ needs.provision-app-delivery.outputs.aagResourceId }}
-      aksAgicIdentityResourceId: ${{ needs.provision-identity.outputs.aksAgicIdentityResourceId }}
