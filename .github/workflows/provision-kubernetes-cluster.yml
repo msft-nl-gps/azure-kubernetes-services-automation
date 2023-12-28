@@ -23,7 +23,7 @@ on:
           description: 'Container Registry Resource Id'
           required: true
           type: string
-        aagResourceGroupId:
+        resourceGroupAsRBACScope:
           description: 'Application Gateway Resource Group Id'
           required: true
           type: string
@@ -79,6 +79,6 @@ jobs:
           deploymentName: kubernetes-cluster
       
       - run: |
-          az role assignment create --role Reader --scope ${{ inputs.aagResourceGroupId }} --assignee ${{ steps.kubernetes-cluster.outputs.aks-cluster-agic-client-id }}
+          az role assignment create --role Reader --scope ${{ inputs.resourceGroupAsRBACScope }} --assignee ${{ steps.kubernetes-cluster.outputs.aks-cluster-agic-client-id }}
           az role assignment create --role Contributor --scope ${{ inputs.aagResourceId}} --assignee ${{ steps.kubernetes-cluster.outputs.aks-cluster-agic-client-id }}
       

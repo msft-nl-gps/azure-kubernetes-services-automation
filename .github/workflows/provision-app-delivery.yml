@@ -24,9 +24,9 @@ on:
           required: true
           type: string
       outputs:
-        aagResourceGroupId:
+        resourceGroupAsRBACScope:
           description: 'Application Gateway Resource Group Id'
-          value: ${{ jobs.provision-aag.outputs.delivery-resource-group-id }}
+          value: ${{ jobs.provision-aag.outputs.resourceGroupAsRBACScope }}
         aagResourceId:
           description: 'Application Gateway Resource Id'
           value: ${{ jobs.provision-aag.outputs.aag-resource-id }}
@@ -90,7 +90,7 @@ jobs:
           deploymentName: application-gateway-delivery
     outputs:
       delivery-resource-group-name: ${{ steps.resourceGroupDelivery.outputs.resourceGroupName }}
-      delivery-resource-group-id: ${{ steps.resourceGroupDelivery.outputs.resourceGroupId }}
+      resourceGroupAsRBACScope: ${{ steps.resourceGroupDelivery.outputs.resourceGroupAsRBACScope }}
       aag-resource-id: ${{ steps.applicationGateway.outputs.aagResourceId }}
   
   provision-akv:

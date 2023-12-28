@@ -51,5 +51,5 @@ jobs:
       subnetResourceId: ${{ needs.provision-networking.outputs.subnet-id-aks }}
       aksIdentityResourceId: ${{ needs.provision-identity.outputs.aksIdentityResourceId }}
       containerRegistryResourceId: ${{ needs.provision-container-registry.outputs.acrResourceId }}
-      aagResourceGroupId: ${{ needs.provision-app-delivery.outputs.aagResourceGroupId }}
+      resourceGroupAsRBACScope: ${{ needs.provision-app-delivery.outputs.resourceGroupAsRBACScope }}
       aagResourceId: ${{ needs.provision-app-delivery.outputs.aagResourceId }}

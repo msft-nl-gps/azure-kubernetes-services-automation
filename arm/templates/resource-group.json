@@ -25,9 +25,9 @@
             "type": "string",
             "value": "[parameters('resourceGroupName')]"
         },
-        "resourceGroupId": {
+        "resourceGroupAsRBACScope": {
             "type": "string",
-            "value": "[resourceId('Microsoft.Resources/resourceGroups', parameters('resourceGroupName'))]"
+            "value": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', parameters('resourceGroupName'))]"
         }
     }
 }
