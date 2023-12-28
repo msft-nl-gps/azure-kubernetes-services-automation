@@ -27,7 +27,7 @@
         },
         "resourceGroupId": {
             "type": "string",
-            "value": "[reference('Microsoft.Resources/resourceGroups', parameters('resourceGroupName'), '2021-04-01').id]"
+            "value": "[resourceId('Microsoft.Resources/resourceGroups', parameters('resourceGroupName'))]"
         }
     }
 }
